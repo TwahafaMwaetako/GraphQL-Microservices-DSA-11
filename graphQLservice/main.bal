@@ -99,5 +99,20 @@ isolated remote function scoreSupervisor(string staff, string score) returns err
         }
     }
 
+isolated remote function addObjecive(string staff, string obj) returns error|string {
+        lock{
+        json id = staff;
+        json objective = obj;
+        map<json> newObjective = <map<json>>{"$set": {"departmentObjective": objective}};
+        
+         int updatedCount = check dbClient->update(newObjective, hodsCollection, databaseName, {staffID: id}, true, false);
+
+        if updatedCount > 0 {
+            return "Objective added successfully";
+        }
+        return "Failed to add objective";
+        }
+    }
+
 
 }
