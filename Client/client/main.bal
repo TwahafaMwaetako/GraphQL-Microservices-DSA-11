@@ -1,34 +1,33 @@
 import ballerina/io;
-import ballerina/graphql
+import ballerina/graphql;
 
 public function main() returns error? {
     graphql:Client graphqlClient = check new ("localhost:2120/graphql");
    //data mutations
    var approveResponse = graphqlClient->execute(string`
    mutation{
-    approveResponse()
-   }
-
+	aproveKPI(staff: "202236", ap: "yes")
+}
    `,{},"approveResponse",{},[]);
    io:println(approveResponse);
 
 
     var scoreKPIResponse = graphqlClient->execute(string`
    mutation{
-    scoreKPIResponse()
-   }
+	scoreKPI(staff: "202236", score: 55)
+}
 
    `,{},"scoreKPIResponse",{},[]);
    io:println(scoreKPIResponse);
 
-   var scoreSupervisorResponse = graphqlClient->execute(string`
-   mutation{
-    scoreSupervisorResponse()
-   }
+   
+var scoreSupResp = graphqlClient->execute(string`
+mutation{
+  scoreSupervisor(staff:"202236", score: 45)
+}
 
-   `,{},"scoreSupervisorResponse",{},[]);
-   io:println(scoreKPIResponse);
-
+   `,{},"scoreSupResp",{},[]);
+   io:println(scoreSupResp);
 
 
 
